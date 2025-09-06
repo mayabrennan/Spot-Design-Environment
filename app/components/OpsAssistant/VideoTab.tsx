@@ -110,7 +110,7 @@ export default function VideoTab() {
             {/* Video Player */}
             <video
               ref={videoRef}
-              src="/videos/sample_video.mp4"
+              src="/videos/sampe_video.mp4"
               className="w-full h-full object-cover"
               controls={false}
               onLoadedMetadata={() => {
