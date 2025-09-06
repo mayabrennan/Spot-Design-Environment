@@ -231,6 +231,7 @@ export default function VideoTab() {
             {/* Video Preview */}
             <div className="w-64 h-36 bg-black rounded-md overflow-hidden">
               {hoverModal.screenshot ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img 
                   src={hoverModal.screenshot} 
                   alt="Video preview" 

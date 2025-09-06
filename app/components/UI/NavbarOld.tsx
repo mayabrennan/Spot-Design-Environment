@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Sparkles } from 'lucide-react' // Import Sparkles icon
 
 interface NavbarOldProps {
@@ -42,9 +43,11 @@ export default function NavbarOld({ currentPage = 'operations', onPageClick, onI
           <div className="flex items-center gap-[62px]">
             {/* SpotAI Logo */}
             <div className="h-6 w-[95px] flex items-center">
-              <img 
+              <Image 
                 src="/images/spot ai logo black.png" 
                 alt="SpotAI" 
+                width={95}
+                height={24}
                 className="h-6 w-auto"
               />
             </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import { Play, Pause, Volume2, Settings, Maximize, ChevronRight, ChevronDown, X } from 'lucide-react'
 import { Card, Timeline } from '@spotai/design-system'
 import ReportsPanel from '../components/UI/ReportsPanel'
@@ -356,9 +357,11 @@ export default function Run({ onTaskClick }: RunProps = {}) {
             {/* Video Preview */}
             <div className="w-64 h-36 bg-black rounded-md overflow-hidden">
               {hoverModal.screenshot ? (
-                <img 
+                <Image 
                   src={hoverModal.screenshot} 
                   alt="Video preview" 
+                  width={256}
+                  height={144}
                   className="w-full h-full object-cover"
                 />
               ) : (

@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Card from './Card'
 import Button from './Button'
 import { User } from 'lucide-react'
@@ -32,9 +33,11 @@ export default function AssistantCard({
       {/* Assistant Image */}
       <div className="aspect-square bg-accent-light rounded-lg mb-4 flex items-center justify-center">
         {image ? (
-          <img 
+          <Image 
             src={image} 
             alt={name}
+            width={200}
+            height={200}
             className="w-full h-full object-cover rounded-lg"
           />
         ) : (
