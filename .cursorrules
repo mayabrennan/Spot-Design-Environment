@@ -1,0 +1,143 @@
+# SpotAI Design System Rules
+
+## Color Usage Rules
+
+### ONLY use these color tokens from the SpotAI design system:
+
+#### Primary Colors (SpotAI Brand)
+- `primary` / `text-primary` / `bg-primary` / `border-primary` - #313a45
+- `primary-hover` / `text-primary-hover` / `bg-primary-hover` - #6c7179
+- `accent` / `text-accent` / `bg-accent` / `border-accent` - #5857e8
+- `accent-hover` / `text-accent-hover` / `bg-accent-hover` - #8181ff
+- `accent-light` / `text-accent-light` / `bg-accent-light` - #f5f5fe
+
+#### Status Colors
+- `success` / `text-success` / `bg-success` / `border-success` - #00b070
+- `success-light` / `text-success-light` / `bg-success-light` - #e8fff7
+- `warning` / `text-warning` / `bg-warning` / `border-warning` - #ff950a
+- `warning-light` / `text-warning-light` / `bg-warning-light` - #ffe9cc
+
+#### Gray Scale
+- `gray-50` to `gray-900` - Use for text, borders, backgrounds
+- `neutral-100` - #f5f5f5
+- `zinc-200` - #e4e4e7
+
+#### Color Palettes (Use sparingly, prefer primary colors)
+- `teal-50` to `teal-900`
+- `violet-50` to `violet-900`
+- `blue-50` to `blue-900`
+- `green-50` to `green-900`
+- `yellow-50` to `yellow-900`
+- `orange-50` to `orange-900`
+- `red-50` to `red-900`
+
+#### Utility Colors
+- `white` / `bg-white` / `text-white` - #ffffff
+- `transparent` / `bg-transparent` - transparent
+- `black-50` - rgba(0, 0, 0, 0.5)
+
+### FORBIDDEN: Never use hardcoded hex colors like:
+- `text-[#123456]`
+- `bg-[#abcdef]`
+- `border-[#fedcba]`
+
+### FORBIDDEN: Never use arbitrary color values like:
+- `text-red-500` (use design system red palette)
+- `bg-blue-600` (use design system blue palette)
+
+## Typography Rules
+
+### ONLY use these font styles from the SpotAI design system:
+
+#### Font Sizes
+- `text-xs` - 12px, line-height: 100%
+- `text-sm` - 14px, line-height: 20px
+- `text-base` - 16px, line-height: 100%
+- `text-lg` - 20px, line-height: 100%
+
+#### Font Weights
+- `font-normal` - 400
+- `font-medium` - 500
+- `font-semibold` - 600
+
+#### Font Family
+- `font-inter` - Inter, sans-serif (default)
+
+#### Capitalization Rules
+- `capitalize` - Use for labels, buttons, and navigation items
+- `uppercase` - Use sparingly for emphasis only
+- `lowercase` - Use for body text and descriptions
+- `normal-case` - Use for default text styling
+
+### FORBIDDEN: Never use arbitrary font sizes like:
+- `text-[14px]`
+- `text-[16px]`
+- `leading-[20px]`
+
+## Spacing Rules
+
+### Use design system spacing tokens:
+- `p-4`, `px-6`, `py-4`, etc.
+- `m-4`, `mx-6`, `my-4`, etc.
+- `gap-4`, `space-y-4`, etc.
+
+## Border Radius Rules
+
+### Use design system border radius:
+- `rounded-sm` - 2px
+- `rounded-lg` - 8px
+- `rounded` - 4px (default)
+
+## CSS Custom Properties
+
+### Use CSS custom properties for dynamic theming:
+- `var(--primary-color)`
+- `var(--accent-color)`
+- `var(--gray-200)`
+- etc.
+
+## Component Guidelines
+
+### Always use design system components when available:
+- `@spotai/design-system` components
+- Import from `lib/spotai-design-system/components/`
+
+### When creating custom components:
+1. Use only design system color tokens
+2. Use only design system typography tokens
+3. Use only design system spacing tokens
+4. Use only design system border radius tokens
+5. Use proper capitalization rules for different text elements
+
+### Capitalization Best Practices:
+- **Labels & Navigation**: Use `capitalize` for menu items, tab labels, and button text
+- **Body Text**: Use `normal-case` or `lowercase` for descriptions and paragraphs
+- **Emphasis**: Use `uppercase` sparingly and only for strong emphasis
+- **Consistency**: Maintain consistent capitalization within similar UI elements
+
+## Examples
+
+### ✅ CORRECT:
+```tsx
+<div className="bg-primary text-white p-4 rounded-lg">
+  <h3 className="text-base font-medium text-accent capitalize">Title</h3>
+  <p className="text-sm text-gray-600 normal-case">Description</p>
+  <button className="text-sm font-medium text-accent capitalize">Edit</button>
+</div>
+```
+
+### ❌ FORBIDDEN:
+```tsx
+<div className="bg-[#313a45] text-[#ffffff] p-[16px] rounded-[8px]">
+  <h3 className="text-[16px] font-[500] text-[#5857e8] uppercase">Title</h3>
+  <p className="text-[14px] text-[#6b7280]">Description</p>
+  <button className="text-[14px] font-[500] text-[#5857e8] lowercase">Edit</button>
+</div>
+```
+
+## Enforcement
+
+- Always check the SpotAI design system at https://design.spotai.co/?path=/docs/lib-showcase--docs
+- Use only the exact color tokens and typography tokens defined there
+- Never use arbitrary values or hardcoded hex colors
+- Prefer design system components over custom implementations 
