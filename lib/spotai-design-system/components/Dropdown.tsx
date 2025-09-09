@@ -66,10 +66,10 @@ const Dropdown: React.FC<DropdownProps> = ({
           sizes[size]
         )}
       >
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {trigger}
         </div>
-        <ChevronDown className={cn('w-4 h-4 text-gray-400 transition-transform ml-2', isOpen && 'rotate-180')} />
+        <ChevronDown className={cn('w-4 h-4 text-gray-400 transition-transform ml-1 flex-shrink-0', isOpen && 'rotate-180')} />
       </button>
 
       {/* Dropdown Menu */}

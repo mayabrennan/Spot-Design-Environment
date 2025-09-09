@@ -13,6 +13,8 @@ interface RunProps {
 export default function Run({ onTaskClick }: RunProps = {}) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [showScorecard, setShowScorecard] = useState(true)
+  const [selectedRun, setSelectedRun] = useState('Run 1')
+  const [isRunDropdownOpen, setIsRunDropdownOpen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [hoverModal, setHoverModal] = useState<{
     isVisible: boolean
@@ -31,6 +33,9 @@ export default function Run({ onTaskClick }: RunProps = {}) {
     segment: undefined,
     screenshot: undefined
   })
+
+  // Available runs
+  const runs = ['Run 1', 'Run 2']
 
   // Timeline data
   const timelineData = {
@@ -145,6 +150,21 @@ export default function Run({ onTaskClick }: RunProps = {}) {
     }
   }, [isPlaying])
 
+  // Handle clicks outside dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isRunDropdownOpen) {
+        const target = event.target as Element
+        if (!target.closest('.run-dropdown')) {
+          setIsRunDropdownOpen(false)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isRunDropdownOpen])
+
   return (
     <div className="flex flex-col h-full bg-neutral-50 w-full">
       {/* Run Header - spans full width */}
@@ -159,21 +179,46 @@ export default function Run({ onTaskClick }: RunProps = {}) {
           </div>
           <ChevronRight className="w-3.5 h-3.5" />
           <div className="flex gap-2.5 items-center">
-            <div className="text-sm font-medium text-primary">Run 5</div>
+            <div className="text-sm font-medium text-primary">{selectedRun}</div>
           </div>
           <ChevronDown className="w-3.5 h-3.5" />
         </div>
         
         <div className="flex items-center justify-between">
-          <div className="text-xl font-semibold text-primary capitalize">run 5</div>
+          <div className="text-xl font-semibold text-primary capitalize">{selectedRun.toLowerCase()}</div>
           <div className="flex gap-4 items-center">
-            <div className="bg-white border border-zinc-200 flex h-9 items-center justify-between px-3 py-2 rounded-md w-56">
-              <div className="flex gap-2.5 items-center">
-                <div className="text-sm font-medium text-primary capitalize">run 5</div>
-              </div>
-              <div className="flex gap-2.5 items-center justify-end">
-                <ChevronDown className="w-4 h-4" />
-              </div>
+            <div className="relative run-dropdown">
+              <button
+                onClick={() => setIsRunDropdownOpen(!isRunDropdownOpen)}
+                className="bg-white border border-zinc-200 flex h-9 items-center justify-between px-3 py-2 rounded-md w-56 hover:bg-gray-50 transition-colors"
+              >
+                <div className="flex gap-2.5 items-center">
+                  <div className="text-sm font-medium text-primary capitalize">{selectedRun.toLowerCase()}</div>
+                </div>
+                <div className="flex gap-2.5 items-center justify-end">
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isRunDropdownOpen ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
+              
+              {/* Dropdown Menu */}
+              {isRunDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  {runs.map((run) => (
+                    <button
+                      key={run}
+                      onClick={() => {
+                        setSelectedRun(run)
+                        setIsRunDropdownOpen(false)
+                      }}
+                      className={`flex items-center gap-2 w-full px-3 py-2 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors text-sm ${
+                        selectedRun === run ? 'bg-accent-light text-accent' : ''
+                      }`}
+                    >
+                      <span className="capitalize">{run.toLowerCase()}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

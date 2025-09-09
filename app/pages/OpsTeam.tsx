@@ -25,56 +25,56 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
     },
     {
       id: 2,
-      name: 'Workplace Monitor',
-      description: 'Responsible for monitoring forklift operations to prevent near-collisions.',
+      name: 'Downtime Tracker Assistant',
+      description: 'Monitors and tracks equipment downtime to optimize production efficiency.',
       location: 'Nevada',
       isFavorited: true,
       icon: '/images/Operator icon-1.png'
     },
     {
       id: 3,
-      name: 'Parking Surveillance Operator',
-      description: 'Oversees security measures to detect firearms and prohibited weapons.',
+      name: 'Line Balancing Assistant',
+      description: 'Optimizes production line balance and workflow distribution.',
       location: 'California',
       isFavorited: false,
       icon: '/images/Operator icon-2.png'
     },
     {
       id: 4,
-      name: 'No Injuries Operator',
-      description: 'Manages access control by unlocking doors for arriving delivery trucks.',
+      name: 'Label/Seal Verification Assistant',
+      description: 'Ensures proper labeling and sealing compliance for all products.',
       location: 'Nevada',
       isFavorited: false,
       icon: '/images/Operator icon-3.png'
     },
     {
       id: 5,
-      name: 'Safety and PPE',
-      description: 'Issues notifications when vehicles exceed designated speed limits.',
+      name: 'Batch Quality Auditor Assistant',
+      description: 'Conducts quality audits and inspections for production batches.',
       location: 'California',
       isFavorited: false,
       icon: '/images/Operator icon-4.png'
     },
     {
       id: 6,
-      name: 'Guidelines Follower',
-      description: 'Alerts staff immediately in case of spills on the factory floor.',
+      name: 'Sanitation & Hygiene Assistant',
+      description: 'Monitors and ensures proper sanitation and hygiene standards.',
       location: 'Nevada',
       isFavorited: false,
       icon: '/images/Operator icon-5.png'
     },
     {
       id: 7,
-      name: 'Warehouse Manager',
-      description: 'Monitors the workspace for unauthorized activities or safety breaches.',
+      name: 'Safety Compliance Assistant',
+      description: 'Ensures adherence to safety protocols and regulatory compliance.',
       location: 'California',
       isFavorited: false,
       icon: '/images/Operator icon-6.png'
     },
     {
       id: 8,
-      name: 'Parking Surveillance Operator',
-      description: 'Identifies and flags any blocked conveyor belts to maintain workflow.',
+      name: 'Onboarding/Training Assistant',
+      description: 'Manages employee onboarding and training program coordination.',
       location: 'California',
       isFavorited: false,
       icon: '/images/Operator icon.png'
@@ -86,7 +86,7 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
       key: 'opsAssistants',
       label: 'Ops Assistants',
       sortable: true,
-      width: 'w-64'
+      width: 'w-[296px]'
     },
     {
       key: 'jobDescription',
@@ -124,6 +124,7 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
   }
 
   const handleRowClick = (assistant: any) => {
+    // Only allow clicking on SOP Changeover Assistant
     if (assistant.name === 'SOP Changeover Assistant' && onNavigateToAssistant) {
       onNavigateToAssistant(assistant.id, assistant.name)
     }
@@ -131,8 +132,18 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
 
   const renderFavorite = (assistant: any) => (
     <button
-      onClick={(e) => toggleFavorite(assistant.id, e)}
-      className="flex items-center justify-center p-1 hover:bg-neutral-100 rounded transition-colors"
+      onClick={(e) => {
+        // Only allow favoriting SOP Changeover Assistant
+        if (assistant.name === 'SOP Changeover Assistant') {
+          toggleFavorite(assistant.id, e)
+        }
+      }}
+      className={`flex items-center justify-center p-1 rounded transition-colors ${
+        assistant.name === 'SOP Changeover Assistant' 
+          ? 'hover:bg-neutral-100' 
+          : 'cursor-not-allowed'
+      }`}
+      disabled={assistant.name !== 'SOP Changeover Assistant'}
     >
       <Star 
         className={`w-4 h-4 ${
@@ -145,7 +156,9 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
   )
 
   const renderOpsAssistant = (assistant: any) => (
-    <div className="flex items-center gap-2.5">
+    <div className={`flex items-center gap-2.5 ${
+      assistant.name !== 'SOP Changeover Assistant' ? 'opacity-85' : ''
+    }`}>
       {/* Operator Icon - Using actual operator images, bigger size */}
       <div className="w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center">
         <Image
@@ -164,13 +177,17 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
   )
 
   const renderJobDescription = (assistant: any) => (
-    <div className="text-xs text-primary font-normal leading-normal">
+    <div className={`text-xs text-primary font-normal leading-normal ${
+      assistant.name !== 'SOP Changeover Assistant' ? 'opacity-85' : ''
+    }`}>
       {assistant.description}
     </div>
   )
 
   const renderLocation = (assistant: any) => (
-    <div className="text-xs text-primary font-normal">
+    <div className={`text-xs text-primary font-normal ${
+      assistant.name !== 'SOP Changeover Assistant' ? 'opacity-85' : ''
+    }`}>
       {assistant.location}
     </div>
   )
@@ -178,13 +195,18 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
   const renderActions = (assistant: any) => (
     <div className="flex items-center justify-center">
       <button 
-        className="p-1 hover:bg-neutral-100 rounded"
+        className={`p-1 rounded ${
+          assistant.name === 'SOP Changeover Assistant' 
+            ? 'hover:bg-neutral-100' 
+            : 'cursor-not-allowed opacity-85'
+        }`}
         onClick={(e) => {
           e.stopPropagation() // Prevent row click when clicking actions
           if (assistant.name === 'SOP Changeover Assistant' && onNavigateToAssistant) {
             onNavigateToAssistant(assistant.id, assistant.name)
           }
         }}
+        disabled={assistant.name !== 'SOP Changeover Assistant'}
       >
         <MoreHorizontal className="w-4 h-4 text-primary" />
       </button>
@@ -226,13 +248,6 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
             </div>
             
             <div className="flex gap-2 items-center">
-              {/* Edit Run Button */}
-              <div className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center">
-                <span className="capitalize font-medium text-primary text-sm">
-                  edit run
-                </span>
-              </div>
-              
               {/* Add New Run Button */}
               <div className="bg-accent rounded-lg px-4 py-2 flex items-center gap-2">
                 <Plus className="w-4 h-4 text-white" />
@@ -253,14 +268,14 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
                 <SearchInput placeholder="Search" />
               </div>
               <div className="flex gap-2">
-                {/* Filter Button */}
-                <button className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center gap-2">
+                {/* Filter Button - Disabled */}
+                <button className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center gap-2 opacity-85 cursor-not-allowed" disabled>
                   <Filter className="w-4 h-4 text-primary" />
                   <span className="capitalize font-medium text-primary text-sm">filter</span>
                 </button>
                 
-                {/* Columns Button */}
-                <button className="bg-white border border-zinc-200 rounded-lg p-2.5">
+                {/* Columns Button - Disabled */}
+                <button className="bg-white border border-zinc-200 rounded-lg p-2.5 opacity-85 cursor-not-allowed" disabled>
                   <ArrowUpDown className="w-4 h-4 text-primary" />
                 </button>
               </div>
@@ -307,15 +322,19 @@ export default function OperationsTab({ onNavigateToAssistant }: OpsTeamProps) {
                       <tr
                         key={rowIndex}
                         onClick={() => handleRowClick(tableData[rowIndex])}
-                        className={`border-b border-zinc-200 bg-white hover:bg-neutral-100 transition-colors ${
+                        className={`border-b border-zinc-200 bg-white transition-colors ${
                           tableData[rowIndex].name === 'SOP Changeover Assistant' 
-                            ? 'cursor-pointer' 
-                            : ''
+                            ? 'cursor-pointer hover:bg-neutral-100' 
+                            : 'cursor-not-allowed opacity-85'
                         }`}
                       >
                         {/* Checkbox Column */}
                         <td className="p-4" onClick={(e) => e.stopPropagation()}>
-                          <div className="w-4 h-4 border border-primary rounded"></div>
+                          <div className={`w-4 h-4 border border-primary rounded ${
+                            tableData[rowIndex].name !== 'SOP Changeover Assistant' 
+                              ? 'opacity-85 cursor-not-allowed' 
+                              : ''
+                          }`}></div>
                         </td>
                         
                         {/* Favorite Column */}

@@ -187,16 +187,17 @@ export default function NavbarOld({ currentPage = 'operations', onPageClick, onI
               Analytics
             </button>
             
-            {/* Iris Button */}
+            {/* Reports Button */}
             <button
-              onClick={() => handleSubNavClick('iris')}
+              onClick={() => handleSubNavClick('reports')}
+              disabled
               className={`px-6 py-2.5 text-sm rounded capitalize transition-colors ${
-                subNavActive === 'iris'
+                subNavActive === 'reports'
                   ? 'bg-neutral-100 text-primary font-medium'
-                  : 'text-primary font-normal hover:bg-neutral-100'
+                  : 'text-gray-400 cursor-not-allowed font-normal'
               }`}
             >
-              Iris
+              Reports
             </button>
           </div>
         </div>

@@ -5,7 +5,11 @@ import { Play, Pause, Volume2, Settings, Maximize, ChevronRight, X } from 'lucid
 import { Card, Timeline } from '@spotai/design-system'
 import ReportsExpandedPanel from '../UI/ReportExpandedPanel'
 
-export default function VideoTab() {
+interface VideoTabProps {
+  selectedRun?: string
+}
+
+export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [hoverModal, setHoverModal] = useState<{
@@ -33,15 +37,18 @@ export default function VideoTab() {
     console.log('Going back from video tab')
   }
 
-  // Individual steps data
+  // Individual steps data matching Figma design
   const stepsData = [
-    { id: 'step-1', width: '18%', color: 'bg-blue-500', label: 'Equipment Shutdown', duration: '2:15', status: 'completed' },
-    { id: 'step-2', width: '15%', color: 'bg-blue-500', label: 'Safety Lockout', duration: '1:45', status: 'completed' },
-    { id: 'step-3', width: '12%', color: 'bg-success', label: 'Tool Preparation', duration: '1:20', status: 'completed' },
-    { id: 'step-4', width: '20%', color: 'bg-success', label: 'Component Removal', duration: '3:10', status: 'completed' },
-    { id: 'step-5', width: '16%', color: 'bg-warning', label: 'Cleaning Process', duration: '2:30', status: 'in-progress' },
-    { id: 'step-6', width: '14%', color: 'bg-gray-300', label: 'Quality Check', duration: '1:50', status: 'pending' },
-    { id: 'step-7', width: '5%', color: 'bg-gray-300', label: 'Final Setup', duration: '0:45', status: 'pending' }
+    { id: 'step-1', width: '450px', leftOffset: '0px', color: 'bg-teal-500', label: 'cleaning and prep', duration: '3:20', status: 'completed' },
+    { id: 'step-2', width: '380px', leftOffset: '100px', color: 'bg-teal-500', label: 'tools staging', duration: '2:15', status: 'completed' },
+    { id: 'step-3', width: '420px', leftOffset: '50px', color: 'bg-teal-500', label: 'plates staging', duration: '2:45', status: 'completed' },
+    { id: 'step-4', width: '594px', leftOffset: '0px', color: 'bg-success', label: 'equipment adjustment', duration: '2:15', status: 'completed' },
+    { id: 'step-5', width: '477px', leftOffset: '120px', color: 'bg-success', label: 'manual adjustment', duration: '1:45', status: 'completed' },
+    { id: 'step-6', width: '5px', leftOffset: '300px', color: 'bg-success', label: 'raw material inspection', duration: '1:20', status: 'completed' },
+    { id: 'step-7', width: '726px', leftOffset: '0px', color: 'bg-blue-500', label: 'quality inspection', duration: '2:30', status: 'in-progress' },
+    { id: 'step-8', width: '726px', leftOffset: '80px', color: 'bg-blue-500', label: 'documentation review', duration: '1:50', status: 'pending' },
+    { id: 'step-9', width: '477px', leftOffset: '50px', color: 'bg-blue-500', label: 'safety compliance', duration: '3:10', status: 'completed' },
+    { id: 'step-10', width: '600px', leftOffset: '100px', color: 'bg-blue-500', label: 'equipment calibration', duration: '2:45', status: 'pending' }
   ]
 
   const captureVideoScreenshot = (): string | undefined => {
@@ -100,7 +107,7 @@ export default function VideoTab() {
   return (
     <div className="flex h-full bg-neutral-50">
       {/* Reports Expanded Panel */}
-      <ReportsExpandedPanel onBack={handleBack} />
+      <ReportsExpandedPanel onBack={handleBack} selectedRun={selectedRun} />
 
       {/* Main Video Content */}
       <div className="flex-1 flex flex-col h-full">
@@ -145,59 +152,97 @@ export default function VideoTab() {
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="px-6 pb-6 mt-6">
-          <Card variant="default" className="p-6">
-            <h3 className="text-lg font-semibold text-primary mb-6">Timeline</h3>
-            
-            {/* Individual Steps Timeline */}
-            <div className="space-y-4">
-              {/* Steps Timeline Bar */}
-              <div className="px-2">
-                <div className="h-2 bg-zinc-200 rounded-full relative flex items-center">
-                  {stepsData.map((step, index) => (
-                    <React.Fragment key={step.id}>
-                      {/* Visual break between steps (except for the first one) */}
-                      {index > 0 && <div className="h-2 bg-zinc-200" style={{ width: '1px' }}></div>}
-                      
-                      {/* Step Segment */}
-                      <div
-                        className={`${step.color} rounded-full transition-all duration-200 cursor-pointer hover:opacity-80 ${
-                          hoverModal?.isVisible && hoverModal.step === step.id
-                            ? 'h-3 shadow-md' 
-                            : 'h-2'
-                        }`}
-                        style={{ 
-                          width: step.width,
-                          marginTop: hoverModal?.isVisible && hoverModal.step === step.id
-                            ? '-2px' 
-                            : '0px'
-                        }}
-                        onMouseEnter={(e) => handleStepHover(step, e)}
-                        onMouseLeave={handleSegmentLeave}
-                      />
-                    </React.Fragment>
-                  ))}
+        {/* Timebar Card */}
+        <div className="px-6 pt-4">
+          <Card variant="default" className="p-0">
+            <div className="bg-white relative rounded-lg size-full">
+              <div className="box-border content-stretch flex flex-col gap-2 items-start justify-center overflow-clip px-0 py-4 relative size-full">
+                <div className="box-border capitalize content-stretch flex font-['Inter:Regular',_sans-serif] font-normal h-3 items-center justify-between leading-[0] not-italic px-4 py-0 relative shrink-0 text-[#313a45] text-[10px] text-nowrap w-full">
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:00</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:05</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:10</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:15</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:20</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:25</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:30</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:35</p>
+                  </div>
+                  <div className="relative shrink-0">
+                    <p className="leading-[normal] text-nowrap whitespace-pre">00:02:40</p>
+                  </div>
                 </div>
               </div>
+              <div aria-hidden="true" className="absolute border border-solid border-zinc-200 inset-0 pointer-events-none rounded-lg" />
+            </div>
+          </Card>
+        </div>
 
-              {/* Steps Labels */}
-              <div className="grid grid-cols-7 gap-2">
-                {stepsData.map((step, index) => (
-                  <div key={step.id} className="text-center">
-                    <div className={`w-2 h-2 rounded-full mx-auto mb-1 ${
-                      step.status === 'completed' ? 'bg-success' :
-                      step.status === 'in-progress' ? 'bg-warning' :
-                      'bg-gray-300'
-                    }`}></div>
-                    <div className="text-xs text-gray-600 font-medium capitalize">
-                      {step.label.split(' ')[0]}
+        {/* Timeline */}
+        <div className="px-6 pb-6 mt-6">
+          <Card variant="default" className="p-0">
+            <div className="bg-white rounded-lg">
+              <div className="p-2">
+                {/* Individual Steps Timeline matching Figma design */}
+                <div>
+                  {stepsData.map((step, index) => (
+                    <div key={step.id} className="p-2">
+                      <div className="flex flex-col gap-2">
+                        {/* Step Button */}
+                        <div className="flex gap-2 items-center justify-start p-1 rounded-md">
+                          <div className="flex gap-2.5 items-center justify-start">
+                            <div className="capitalize font-medium text-primary text-sm">
+                              {step.label}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Timeline Bar */}
+                        <div className="flex flex-col items-start justify-start px-2 py-0 relative w-full">
+                          {/* Base line with overlaid progress bar */}
+                          <div className="h-1.5 relative w-full">
+                            <div className="absolute inset-[-3px_-0.35%]">
+                              {/* Grey base line */}
+                              <div className="h-1.5 bg-zinc-200 w-full rounded-full"></div>
+                              
+                              {/* Purple progress bar overlaid on top */}
+                              <div 
+                                className={`absolute top-0 h-1.5 ${step.color} cursor-pointer transition-all duration-200 hover:opacity-80 rounded-full ${
+                                  hoverModal?.isVisible && hoverModal.step === step.id
+                                    ? 'h-2 shadow-md' 
+                                    : 'h-1.5'
+                                }`}
+                                style={{ 
+                                  width: step.width,
+                                  left: step.leftOffset,
+                                  marginTop: hoverModal?.isVisible && hoverModal.step === step.id
+                                    ? '-2px' 
+                                    : '0px'
+                                }}
+                                onMouseEnter={(e) => handleStepHover(step, e)}
+                                onMouseLeave={handleSegmentLeave}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500">
-                      {step.duration}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </Card>

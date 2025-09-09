@@ -6,7 +6,7 @@ import OpsAssistant from '../pages/OpsAssistant'
 import Analytics from '../pages/Analytics'
 import Insights from '../pages/Insights'
 import Run from '../pages/Run'
-import Iris from '../pages/Iris'
+import Reports from '../pages/Reports'
 import NavbarOld from './UI/NavbarOld'
 import IrisSidebar from './UI/IrisSidebar'
 
@@ -42,15 +42,15 @@ export default function Dashboard() {
         return <Insights />
       case 'run':
         return <Run />
-      case 'iris':
-        return <Iris />
+      case 'reports':
+        return <Reports />
       default:
         return <OpsTeam onNavigateToAssistant={handleNavigateToAssistant} />
     }
   }
 
-  // Show Iris sidebar on all pages except Iris page
-  const shouldShowIrisSidebar = isIrisSidebarOpen && currentPage !== 'iris'
+  // Show Iris sidebar on all pages except Reports page
+  const shouldShowIrisSidebar = isIrisSidebarOpen && currentPage !== 'reports'
 
   return (
     <div className="flex flex-col h-screen bg-neutral-50">

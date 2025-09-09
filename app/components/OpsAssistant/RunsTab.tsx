@@ -28,7 +28,7 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
     {
       id: '1',
       run: 'Run 1',
-      avgScore: '5/5',
+      avgScore: '3/5',
       runDuration: '02:03:01',
       footage: '08/09/24, 6:30 PM PST',
       runProcessedOn: '01/06/24 11:32 AM PST',
@@ -38,7 +38,7 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
     {
       id: '2',
       run: 'Run 2',
-      avgScore: '3/5',
+      avgScore: '5/5',
       runDuration: '02:03:01',
       footage: '08/08/24, 12:00 PM PST',
       runProcessedOn: '01/06/24 11:32 AM PST',
@@ -105,18 +105,24 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
   }
 
   const handleSelectAll = () => {
-    if (selectedRows.length === runsData.length) {
+    const enabledRuns = runsData.filter(run => run.run === 'Run 1' || run.run === 'Run 2')
+    const enabledRunIds = enabledRuns.map(run => run.id)
+    
+    if (selectedRows.length === enabledRunIds.length) {
       setSelectedRows([])
     } else {
-      setSelectedRows(runsData.map(run => run.id))
+      setSelectedRows(enabledRunIds)
     }
   }
 
-  const handleSelectRow = (id: string) => {
-    if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter(rowId => rowId !== id))
-    } else {
-      setSelectedRows([...selectedRows, id])
+  const handleSelectRow = (id: string, run: RunData) => {
+    // Only allow selecting Run 1 and Run 2
+    if (run.run === 'Run 1' || run.run === 'Run 2') {
+      if (selectedRows.includes(id)) {
+        setSelectedRows(selectedRows.filter(rowId => rowId !== id))
+      } else {
+        setSelectedRows([...selectedRows, id])
+      }
     }
   }
 
@@ -129,7 +135,8 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
   }
 
   const handleRowClick = (run: RunData) => {
-    if (run.run === 'Run 1' && onNavigateToVideo) {
+    // Only allow clicking on Run 1 and Run 2
+    if ((run.run === 'Run 1' || run.run === 'Run 2') && onNavigateToVideo) {
       onNavigateToVideo(run.id, run.run)
     }
   }
@@ -158,14 +165,14 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
                 <SearchInput placeholder="Search" />
               </div>
               <div className="flex gap-2">
-                {/* Filter Button */}
-                <button className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center gap-2">
+                {/* Filter Button - Disabled */}
+                <button className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center gap-2 opacity-85 cursor-not-allowed" disabled>
                   <Filter className="w-4 h-4 text-primary" />
                   <span className="capitalize font-medium text-primary text-sm">filter</span>
                 </button>
                 
-                {/* Columns Button */}
-                <button className="bg-white border border-zinc-200 rounded-lg p-2.5">
+                {/* Columns Button - Disabled */}
+                <button className="bg-white border border-zinc-200 rounded-lg p-2.5 opacity-85 cursor-not-allowed" disabled>
                   <ArrowUpDown className="w-4 h-4 text-primary" />
                 </button>
               </div>
@@ -182,7 +189,7 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
                         <div className="flex items-center">
                           <input
                             type="checkbox"
-                            checked={selectedRows.length === runsData.length && runsData.length > 0}
+                            checked={selectedRows.length === runsData.filter(run => run.run === 'Run 1' || run.run === 'Run 2').length && runsData.filter(run => run.run === 'Run 1' || run.run === 'Run 2').length > 0}
                             onChange={handleSelectAll}
                             className="w-4 h-4 rounded border-zinc-300 text-accent focus:ring-accent focus:ring-2"
                           />
@@ -206,7 +213,7 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
                       </th>
                       
                       {/* Run Duration Column */}
-                      <th className="text-left p-4 font-medium text-primary text-sm capitalize cursor-pointer hover:bg-neutral-100 w-32">
+                      <th className="text-left p-4 font-medium text-primary text-sm capitalize cursor-pointer hover:bg-neutral-100 w-40">
                         <div className="flex items-center gap-2">
                           <span>Run Duration</span>
                           <ChevronsUpDown className="w-3 h-3 text-gray-300" />
@@ -254,8 +261,10 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
                       <tr
                         key={run.id}
                         onClick={() => handleRowClick(run)}
-                        className={`border-b border-zinc-200 bg-white hover:bg-neutral-100 transition-colors ${
-                          run.run === 'Run 1' ? 'cursor-pointer' : ''
+                        className={`border-b border-zinc-200 bg-white transition-colors ${
+                          run.run === 'Run 1' || run.run === 'Run 2' 
+                            ? 'cursor-pointer hover:bg-neutral-100' 
+                            : 'cursor-not-allowed opacity-85'
                         }`}
                       >
                         {/* Checkbox Column */}
@@ -263,8 +272,13 @@ const RunsTab = ({ onNavigateToVideo }: RunsTabProps) => {
                           <input
                             type="checkbox"
                             checked={selectedRows.includes(run.id)}
-                            onChange={() => handleSelectRow(run.id)}
-                            className="w-4 h-4 rounded border-zinc-300 text-accent focus:ring-accent focus:ring-2"
+                            onChange={() => handleSelectRow(run.id, run)}
+                            disabled={run.run !== 'Run 1' && run.run !== 'Run 2'}
+                            className={`w-4 h-4 rounded border-zinc-300 text-accent focus:ring-accent focus:ring-2 ${
+                              run.run !== 'Run 1' && run.run !== 'Run 2' 
+                                ? 'opacity-85 cursor-not-allowed' 
+                                : ''
+                            }`}
                           />
                         </td>
                         

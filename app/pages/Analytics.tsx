@@ -11,6 +11,7 @@ export default function Analytics() {
   const [selectedLine, setSelectedLine] = useState('all lines')
   const [selectedTeammate, setSelectedTeammate] = useState('all teammates')
   const [selectedMoreFilters, setSelectedMoreFilters] = useState('more filters')
+  const [selectedCompareTo, setSelectedCompareTo] = useState('No Comparison')
   const [hoveredRun, setHoveredRun] = useState<number | null>(null)
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 })
 
@@ -32,6 +33,58 @@ export default function Analytics() {
     { id: 14, duration: '14:45:17', leads: 'Brian Wilson, Lisa Martinez' }
   ]
 
+  // Comparison data for overlay bars
+  const comparisonData = {
+    'Previous Week': [
+      { id: 1, duration: '32:15:00', height: '214px' },
+      { id: 2, duration: '29:30:15', height: '196px' },
+      { id: 3, duration: '31:20:45', height: '208px' },
+      { id: 4, duration: '30:45:30', height: '205px' },
+      { id: 5, duration: '28:10:22', height: '187px' },
+      { id: 6, duration: '24:25:18', height: '162px' },
+      { id: 7, duration: '19:15:35', height: '128px' },
+      { id: 8, duration: '13:40:20', height: '91px' },
+      { id: 9, duration: '14:30:15', height: '97px' },
+      { id: 10, duration: '21:45:30', height: '145px' },
+      { id: 11, duration: '26:20:45', height: '175px' },
+      { id: 12, duration: '18:15:20', height: '121px' },
+      { id: 13, duration: '23:30:15', height: '157px' },
+      { id: 14, duration: '16:20:30', height: '108px' }
+    ],
+    'Previous Month': [
+      { id: 1, duration: '28:45:00', height: '192px' },
+      { id: 2, duration: '25:20:30', height: '169px' },
+      { id: 3, duration: '26:15:45', height: '175px' },
+      { id: 4, duration: '26:00:15', height: '173px' },
+      { id: 5, duration: '24:30:22', height: '163px' },
+      { id: 6, duration: '20:45:18', height: '138px' },
+      { id: 7, duration: '16:20:35', height: '109px' },
+      { id: 8, duration: '10:15:20', height: '68px' },
+      { id: 9, duration: '11:30:15', height: '77px' },
+      { id: 10, duration: '17:45:30', height: '119px' },
+      { id: 11, duration: '22:20:45', height: '148px' },
+      { id: 12, duration: '14:15:20', height: '95px' },
+      { id: 13, duration: '19:30:15', height: '130px' },
+      { id: 14, duration: '12:20:30', height: '82px' }
+    ],
+    'Previous Year': [
+      { id: 1, duration: '35:30:00', height: '237px' },
+      { id: 2, duration: '32:45:30', height: '218px' },
+      { id: 3, duration: '34:20:15', height: '229px' },
+      { id: 4, duration: '33:15:45', height: '221px' },
+      { id: 5, duration: '31:00:22', height: '207px' },
+      { id: 6, duration: '27:30:18', height: '183px' },
+      { id: 7, duration: '22:45:35', height: '152px' },
+      { id: 8, duration: '16:20:20', height: '109px' },
+      { id: 9, duration: '17:15:15', height: '115px' },
+      { id: 10, duration: '24:30:30', height: '163px' },
+      { id: 11, duration: '29:45:45', height: '198px' },
+      { id: 12, duration: '21:15:20', height: '142px' },
+      { id: 13, duration: '26:30:15', height: '177px' },
+      { id: 14, duration: '19:20:30', height: '129px' }
+    ]
+  }
+
   const handleBarHover = (runId: number, event: React.MouseEvent) => {
     setHoveredRun(runId)
     
@@ -41,12 +94,12 @@ export default function Analytics() {
     const viewportWidth = window.innerWidth
     const rightEdge = viewportWidth - sidebarWidth
     
-    let x = event.clientX + 8
-    let y = event.clientY - 8
+    let x = event.clientX + 16
+    let y = event.clientY - 16
     
     // If card would be cut off by sidebar, position it to the left of mouse
     if (x + cardWidth > rightEdge) {
-      x = event.clientX - cardWidth - 8
+      x = event.clientX - cardWidth - 16
     }
     
     setHoverPosition({ x, y })
@@ -59,30 +112,30 @@ export default function Analytics() {
   // Filter options
   const plantOptions = [
     { label: 'All Plants', value: 'all plants' },
-    { label: 'Plant A', value: 'plant-a' },
-    { label: 'Plant B', value: 'plant-b' },
-    { label: 'Plant C', value: 'plant-c' }
+    { label: 'Plant A', value: 'plant-a', disabled: true },
+    { label: 'Plant B', value: 'plant-b', disabled: true },
+    { label: 'Plant C', value: 'plant-c', disabled: true }
   ]
 
   const lineOptions = [
     { label: 'All Lines', value: 'all lines' },
-    { label: 'Line 1', value: 'line-1' },
-    { label: 'Line 2', value: 'line-2' },
-    { label: 'Line 3', value: 'line-3' }
+    { label: 'Line 1', value: 'line-1', disabled: true },
+    { label: 'Line 2', value: 'line-2', disabled: true },
+    { label: 'Line 3', value: 'line-3', disabled: true }
   ]
 
   const teammateOptions = [
     { label: 'All Teammates', value: 'all teammates' },
-    { label: 'Michael Johnson', value: 'michael-johnson' },
-    { label: 'David Brown', value: 'david-brown' },
-    { label: 'James Wilson', value: 'james-wilson' }
+    { label: 'Michael Johnson', value: 'michael-johnson', disabled: true },
+    { label: 'David Brown', value: 'david-brown', disabled: true },
+    { label: 'James Wilson', value: 'james-wilson', disabled: true }
   ]
 
   const moreFilterOptions = [
     { label: 'More Filters', value: 'more filters' },
-    { label: 'Date Range', value: 'date-range' },
-    { label: 'Score Range', value: 'score-range' },
-    { label: 'Status', value: 'status' }
+    { label: 'Date Range', value: 'date-range', disabled: true },
+    { label: 'Score Range', value: 'score-range', disabled: true },
+    { label: 'Status', value: 'status', disabled: true }
   ]
 
   // Sample data matching Figma exactly
@@ -171,49 +224,57 @@ export default function Analytics() {
               
               {/* Filter Dropdowns */}
               <div className="flex items-center gap-2 pl-2">
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">{selectedPlant}</span>
-                    </div>
-                  }
-                  items={plantOptions}
-                  onSelect={(item) => setSelectedPlant(item.label)}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">{selectedPlant}</span>
+                      </div>
+                    }
+                    items={plantOptions}
+                    onSelect={(item) => setSelectedPlant(item.label)}
+                    size="sm"
+                  />
+                </div>
                 
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">{selectedLine}</span>
-                    </div>
-                  }
-                  items={lineOptions}
-                  onSelect={(item) => setSelectedLine(item.label)}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">{selectedLine}</span>
+                      </div>
+                    }
+                    items={lineOptions}
+                    onSelect={(item) => setSelectedLine(item.label)}
+                    size="sm"
+                  />
+                </div>
                 
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">{selectedTeammate}</span>
-                    </div>
-                  }
-                  items={teammateOptions}
-                  onSelect={(item) => setSelectedTeammate(item.label)}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">{selectedTeammate}</span>
+                      </div>
+                    }
+                    items={teammateOptions}
+                    onSelect={(item) => setSelectedTeammate(item.label)}
+                    size="sm"
+                  />
+                </div>
                 
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-accent text-sm">{selectedMoreFilters}</span>
-                    </div>
-                  }
-                  items={moreFilterOptions}
-                  onSelect={(item) => setSelectedMoreFilters(item.label)}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-accent text-sm">{selectedMoreFilters}</span>
+                      </div>
+                    }
+                    items={moreFilterOptions}
+                    onSelect={(item) => setSelectedMoreFilters(item.label)}
+                    size="sm"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -226,24 +287,29 @@ export default function Analytics() {
             <div className="bg-white border border-zinc-200 rounded-lg">
               <div className="flex items-center justify-between p-4 border-b border-zinc-200">
                 <h3 className="text-xl font-semibold text-primary capitalize">Key Metric</h3>
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">run duration</span>
-                    </div>
-                  }
-                  items={[
-                    { label: 'Run Duration', value: 'run-duration' },
-                    { label: 'Efficiency', value: 'efficiency' },
-                    { label: 'Quality Score', value: 'quality-score' }
-                  ]}
-                  onSelect={() => {}}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">run duration</span>
+                      </div>
+                    }
+                    items={[
+                      { label: 'Run Duration', value: 'run-duration' },
+                      { label: 'Efficiency', value: 'efficiency', disabled: true },
+                      { label: 'Quality Score', value: 'quality-score', disabled: true }
+                    ]}
+                    onSelect={() => {}}
+                    size="sm"
+                  />
+                </div>
               </div>
               <div className="p-4">
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl font-medium text-primary">24 minutes</div>
+                  <div>
+                    <div className="text-2xl font-medium text-primary">24 minutes</div>
+                    <div className="text-sm text-gray-500 mt-1">Average duration across all runs</div>
+                  </div>
                   <div className="bg-success-light text-success px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
                     <span>+2 minutes</span>
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -258,20 +324,22 @@ export default function Analytics() {
             <div className="bg-white border border-zinc-200 rounded-lg">
               <div className="flex items-center justify-between p-4 border-b border-zinc-200">
                 <h3 className="text-xl font-semibold text-primary capitalize">Leaderboard</h3>
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">run duration</span>
-                    </div>
-                  }
-                  items={[
-                    { label: 'Run Duration', value: 'run-duration' },
-                    { label: 'Efficiency', value: 'efficiency' },
-                    { label: 'Quality Score', value: 'quality-score' }
-                  ]}
-                  onSelect={() => {}}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">run duration</span>
+                      </div>
+                    }
+                    items={[
+                      { label: 'Run Duration', value: 'run-duration' },
+                      { label: 'Efficiency', value: 'efficiency', disabled: true },
+                      { label: 'Quality Score', value: 'quality-score', disabled: true }
+                    ]}
+                    onSelect={() => {}}
+                    size="sm"
+                  />
+                </div>
               </div>
               <div className="p-4 space-y-4">
                 <div className="flex items-center justify-between py-2 border-b border-zinc-200">
@@ -302,20 +370,22 @@ export default function Analytics() {
             <div className="bg-white border border-zinc-200 rounded-lg">
               <div className="flex items-center justify-between p-4 border-b border-zinc-200">
                 <h3 className="text-xl font-semibold text-primary capitalize">AI Recommendations</h3>
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">run duration</span>
-                    </div>
-                  }
-                  items={[
-                    { label: 'Run Duration', value: 'run-duration' },
-                    { label: 'Efficiency', value: 'efficiency' },
-                    { label: 'Quality Score', value: 'quality-score' }
-                  ]}
-                  onSelect={() => {}}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">run duration</span>
+                      </div>
+                    }
+                    items={[
+                      { label: 'Run Duration', value: 'run-duration' },
+                      { label: 'Efficiency', value: 'efficiency', disabled: true },
+                      { label: 'Quality Score', value: 'quality-score', disabled: true }
+                    ]}
+                    onSelect={() => {}}
+                    size="sm"
+                  />
+                </div>
               </div>
               <div className="p-4 space-y-2">
                 <div className="flex items-start gap-2">
@@ -351,34 +421,39 @@ export default function Analytics() {
             <div className="flex items-center justify-between p-4 border-b border-zinc-200">
               <h3 className="text-xl font-semibold text-primary capitalize">Run Trends</h3>
               <div className="flex items-center gap-2">
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary text-sm">run duration</span>
-                    </div>
-                  }
-                  items={[
-                    { label: 'Run Duration', value: 'run-duration' },
-                    { label: 'Efficiency', value: 'efficiency' },
-                    { label: 'Quality Score', value: 'quality-score' }
-                  ]}
-                  onSelect={() => {}}
-                  size="sm"
-                />
-                <Dropdown
-                  trigger={
-                    <div className="flex items-center gap-2">
-                      <span className="capitalize font-medium text-primary-hover text-sm">compare to</span>
-                    </div>
-                  }
-                  items={[
-                    { label: 'Previous Week', value: 'previous-week' },
-                    { label: 'Previous Month', value: 'previous-month' },
-                    { label: 'Previous Year', value: 'previous-year' }
-                  ]}
-                  onSelect={() => {}}
-                  size="sm"
-                />
+                <div className="w-36">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary text-sm">run duration</span>
+                      </div>
+                    }
+                    items={[
+                      { label: 'Run Duration', value: 'run-duration' },
+                      { label: 'Efficiency', value: 'efficiency', disabled: true },
+                      { label: 'Quality Score', value: 'quality-score', disabled: true }
+                    ]}
+                    onSelect={() => {}}
+                    size="sm"
+                  />
+                </div>
+                <div className="w-44">
+                  <Dropdown
+                    trigger={
+                      <div className="flex items-center">
+                        <span className="capitalize font-medium text-primary-hover text-sm">{selectedCompareTo}</span>
+                      </div>
+                    }
+                    items={[
+                      { label: 'No Comparison', value: 'no-comparison' },
+                      { label: 'Previous Week', value: 'previous-week' },
+                      { label: 'Previous Month', value: 'previous-month' },
+                      { label: 'Previous Year', value: 'previous-year' }
+                    ]}
+                    onSelect={(item) => setSelectedCompareTo(item.label)}
+                    size="sm"
+                  />
+                </div>
               </div>
             </div>
             <div className="p-4">
@@ -407,6 +482,375 @@ export default function Analytics() {
                         <div className="border-t border-zinc-200"></div>
                       </div>
 
+                      {/* Comparison bars - side by side with original bars */}
+                      {selectedCompareTo !== 'No Comparison' && (
+                        <>
+                          {/* Run 1 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            style={{ marginLeft: '48px' }}
+                            onMouseEnter={(e) => handleBarHover(1, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '200px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[0]?.height || '200px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 2 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(2, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '180px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[1]?.height || '180px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 3 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(3, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '190px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[2]?.height || '190px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 4 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(4, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '185px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[3]?.height || '185px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 5 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(5, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '175px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[4]?.height || '175px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 6 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(6, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '148px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[5]?.height || '148px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 7 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(7, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '118px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[6]?.height || '118px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 8 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(8, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '75px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[7]?.height || '75px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 9 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(9, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '82px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[8]?.height || '82px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 10 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(10, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '130px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[9]?.height || '130px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 11 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(11, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '165px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[10]?.height || '165px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 12 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(12, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '108px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[11]?.height || '108px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 13 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(13, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '142px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[12]?.height || '142px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Run 14 - Current and Comparison bars side by side */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(14, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div className="flex gap-1 items-end">
+                              {/* Current bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: '98px',
+                                  backgroundColor: '#8181ff'
+                                }}
+                              />
+                              {/* Comparison bar - half width */}
+                              <div
+                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                style={{ 
+                                  height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[13]?.height || '98px',
+                                  backgroundColor: '#4a5568'
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </>
+                      )}
 
                       {/* Hover card */}
                       {hoveredRun && (
@@ -432,215 +876,220 @@ export default function Analytics() {
                           </div>
                         </div>
                       )}
-                      {/* Run 1 - 30 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(1, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '200px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
+                      {/* Original bars - only show when no comparison */}
+                      {selectedCompareTo === 'No Comparison' && (
+                        <>
+                          {/* Run 1 - 30 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(1, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '200px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 2 - 27 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(2, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '180px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
                       
-                      {/* Run 2 - 27 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(2, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '180px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 3 - 28 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(3, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '186px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 4 - 28 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(4, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '186px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 5 - 26 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(5, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '174px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 6 - 22 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(6, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '146px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 7 - 17 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(7, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '114px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 8 - 11 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(8, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '74px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 9 - 12 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(9, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '80px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 10 - 19 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(10, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '127px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 11 - 24 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(11, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '160px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 12 - 16 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(12, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '107px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 13 - 21 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(13, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '140px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Run 14 - 14 minutes */}
-                      <div 
-                        className="flex flex-col items-center relative z-10 cursor-pointer"
-                        onMouseEnter={(e) => handleBarHover(14, e)}
-                        onMouseLeave={handleBarLeave}
-                      >
-                        <div
-                          className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
-                          style={{ 
-                            height: '93px',
-                            backgroundColor: '#8181ff'
-                          }}
-                        />
-                      </div>
+                          {/* Run 3 - 28 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(3, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '186px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 4 - 28 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(4, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '186px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 5 - 26 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(5, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '174px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 6 - 22 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(6, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '146px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 7 - 17 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(7, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '114px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 8 - 11 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(8, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '74px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 9 - 12 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(9, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '80px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 10 - 19 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(10, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '127px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 11 - 24 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(11, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '160px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 12 - 16 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(12, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '107px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 13 - 21 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(13, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '140px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                          
+                          {/* Run 14 - 14 minutes */}
+                          <div 
+                            className="flex flex-col items-center relative z-10 cursor-pointer"
+                            onMouseEnter={(e) => handleBarHover(14, e)}
+                            onMouseLeave={handleBarLeave}
+                          >
+                            <div
+                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              style={{ 
+                                height: '93px',
+                                backgroundColor: '#8181ff'
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                   
