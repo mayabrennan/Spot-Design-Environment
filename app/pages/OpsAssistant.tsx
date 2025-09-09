@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState, forwardRef, useImperativeHandle } from 'react'
@@ -23,7 +24,7 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
   const [selectedRun, setSelectedRun] = useState('Run 1')
   const [isRunDropdownOpen, setIsRunDropdownOpen] = useState(false)
   const [showVideoTab, setShowVideoTab] = useState(true)
-  const runOptions = ['Run 1', 'Run 2']
+  const runOptions = ['Run 1', 'Run 2', 'Run 3', 'Run 4', 'Run 5']
 
   const handleRunSelect = (run: string) => {
     setSelectedRun(run)
@@ -113,8 +114,15 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {/* Add New Run Button - Disabled */}
-                <div className="bg-accent rounded-lg px-4 py-2 flex items-center gap-2 opacity-85 cursor-not-allowed">
+                {/* Edit Run Button */}
+                <div className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center">
+                  <span className="capitalize font-medium text-primary text-sm">
+                    edit run
+                  </span>
+                </div>
+                
+                {/* Add New Run Button */}
+                <div className="bg-accent rounded-lg px-4 py-2 flex items-center gap-2">
                   <Plus className="w-4 h-4 text-white" />
                   <span className="capitalize font-medium text-white text-sm">
                     add new run
@@ -148,7 +156,7 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
         ) : activeTab === 'runs' ? (
           <RunsTab onNavigateToVideo={handleNavigateToVideo} />
         ) : activeTab === 'video' ? (
-          <VideoTab selectedRun={selectedRun} />
+          <VideoTab />
         ) : activeTab === 'output' ? (
           <OutputTab />
         ) : activeTab === 'reporting' ? (

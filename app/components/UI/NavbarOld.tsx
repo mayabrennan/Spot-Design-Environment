@@ -205,3 +205,6 @@ export default function NavbarOld({ currentPage = 'operations', onPageClick, onI
     </div>
   )
 }
+
+
+
