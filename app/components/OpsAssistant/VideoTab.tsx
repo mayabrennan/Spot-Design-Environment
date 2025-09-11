@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Play, Pause, Volume2, Settings, Maximize, ChevronRight, X } from 'lucide-react'
+import { Play, Pause, Volume2, Settings, Maximize, ChevronRight, X, Tag, MoreHorizontal } from 'lucide-react'
 import { Card, Timeline } from '@spotai/design-system'
 import RunPanel from '../UI/RunPanel'
 
@@ -113,8 +113,29 @@ export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
 
       {/* Main Video Content */}
       <div className="flex-1 flex flex-col h-full">
+        {/* Header with Run Name and Action Buttons */}
+        <div className="px-10 pt-4 pb-4">
+          <div className="flex items-center justify-between">
+            {/* Run Name */}
+            <h2 className="text-base font-medium text-primary">Run Sept 8th 2025 5:25 PM PDT</h2>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2">
+              {/* Tags Button */}
+              <button className="px-3 py-2 h-9 rounded-lg bg-neutral-100 hover:bg-gray-200 text-primary border-0 transition-colors flex items-center justify-center">
+                <Tag className="w-4 h-4" />
+              </button>
+
+              {/* More Actions Button */}
+              <button className="px-3 py-2 h-9 rounded-lg bg-white border border-zinc-200 text-gray-400 cursor-not-allowed opacity-50 flex items-center justify-center" disabled>
+                <MoreHorizontal className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Video Player */}
-        <div className="px-10 pt-4">
+        <div className="px-10 pb-4">
           <div className="bg-black rounded-lg aspect-video relative overflow-hidden" style={{ borderRadius: '8px' }}>
             {/* Video Player */}
             <video

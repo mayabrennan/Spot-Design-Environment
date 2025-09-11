@@ -699,88 +699,48 @@ export default function RunPanel({ onBack, onTaskClick, selectedRun = 'Run 1' }:
     <div className="w-1/3 bg-white border-l border-zinc-200 border-r border-zinc-200 flex flex-col h-full">
       {/* Content */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
-        {/* Run Header with Action Buttons */}
+        {/* Toggle Group with Download Button */}
         <div className="flex items-center justify-between">
-          {/* Run Header */}
-          {isEditingRunName ? (
-            <input
-              type="text"
-              value={runName}
-              onChange={handleRunNameChange}
-              onBlur={handleRunNameBlur}
-              onKeyDown={handleRunNameKeyDown}
-              className="text-base font-medium text-primary bg-transparent border-none outline-none focus:ring-0 p-0"
-              autoFocus
-            />
-          ) : (
-            <h2 
-              className="text-base font-medium text-primary cursor-pointer hover:bg-gray-50 px-2 py-1 rounded transition-colors"
-              onClick={handleRunNameClick}
-            >
-              {runName}
-            </h2>
-          )}
+          {/* Toggle Group */}
+          <div className="bg-white border border-zinc-200 rounded-md p-1.5 w-fit">
+            <div className="flex gap-1">
+              {toggleItems.map((item) => (
+                <button
+                  key={item.value}
+                  onClick={() => setActiveTab(item.value)}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
+                    activeTab === item.value
+                      ? 'bg-accent-light text-accent'
+                      : 'text-primary-hover hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
             {/* Add Field Button */}
             <Button
-              variant="secondary"
-              size="sm"
-              className="px-3 py-2 h-9 rounded-lg"
-              onClick={handleAddFieldClick}
-            >
-              <Plus className="w-4 h-4" />
-            </Button>
-
-            {/* Tags Button */}
-            <Button
               variant="outline"
               size="sm"
               className="px-3 py-2 h-9 rounded-lg bg-neutral-100 hover:bg-gray-200 text-primary border-0 transition-colors"
-              onClick={handleTagsClick}
+              onClick={handleAddFieldClick}
             >
-              <Tag className="w-4 h-4" />
+              <Plus className="w-4 h-4" />
             </Button>
 
             {/* Download Button */}
             <Button
               variant="outline"
               size="sm"
-              className="px-3 py-2 h-9 rounded-lg bg-primary hover:bg-primary-hover text-white border-0 transition-colors"
+              className="px-3 py-2 h-9 rounded-lg bg-neutral-100 hover:bg-gray-200 text-primary border-0 transition-colors"
               onClick={handleDownload}
             >
               <Download className="w-4 h-4" />
             </Button>
-
-            {/* More Actions Button */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="px-3 py-2 h-9 rounded-lg bg-white border border-zinc-200 text-gray-400 cursor-not-allowed opacity-50"
-              disabled
-            >
-              <MoreHorizontal className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Toggle Group */}
-        <div className="bg-white border border-zinc-200 rounded-md p-1.5 w-fit">
-          <div className="flex gap-1">
-            {toggleItems.map((item) => (
-              <button
-                key={item.value}
-                onClick={() => setActiveTab(item.value)}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                  activeTab === item.value
-                    ? 'bg-accent-light text-accent'
-                    : 'text-primary-hover hover:bg-gray-50'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
           </div>
         </div>
 
