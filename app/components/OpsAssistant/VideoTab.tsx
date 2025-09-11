@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Play, Pause, Volume2, Settings, Maximize, ChevronRight, X } from 'lucide-react'
 import { Card, Timeline } from '@spotai/design-system'
-import ReportsExpandedPanel from '../UI/ReportExpandedPanel'
+import RunPanel from '../UI/RunPanel'
 
 interface VideoTabProps {
   selectedRun?: string
@@ -39,16 +39,18 @@ export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
 
   // Individual steps data matching Figma design
   const stepsData = [
-    { id: 'step-1', width: '450px', leftOffset: '0px', color: 'bg-teal-500', label: 'cleaning and prep', duration: '3:20', status: 'completed' },
-    { id: 'step-2', width: '380px', leftOffset: '100px', color: 'bg-teal-500', label: 'tools staging', duration: '2:15', status: 'completed' },
-    { id: 'step-3', width: '420px', leftOffset: '50px', color: 'bg-teal-500', label: 'plates staging', duration: '2:45', status: 'completed' },
-    { id: 'step-4', width: '594px', leftOffset: '0px', color: 'bg-success', label: 'equipment adjustment', duration: '2:15', status: 'completed' },
-    { id: 'step-5', width: '477px', leftOffset: '120px', color: 'bg-success', label: 'manual adjustment', duration: '1:45', status: 'completed' },
-    { id: 'step-6', width: '5px', leftOffset: '300px', color: 'bg-success', label: 'raw material inspection', duration: '1:20', status: 'completed' },
-    { id: 'step-7', width: '726px', leftOffset: '0px', color: 'bg-blue-500', label: 'quality inspection', duration: '2:30', status: 'in-progress' },
-    { id: 'step-8', width: '726px', leftOffset: '80px', color: 'bg-blue-500', label: 'documentation review', duration: '1:50', status: 'pending' },
-    { id: 'step-9', width: '477px', leftOffset: '50px', color: 'bg-blue-500', label: 'safety compliance', duration: '3:10', status: 'completed' },
-    { id: 'step-10', width: '600px', leftOffset: '100px', color: 'bg-blue-500', label: 'equipment calibration', duration: '2:45', status: 'pending' }
+    { id: 'step-1', width: '450px', leftOffset: '0px', color: 'bg-accent', label: 'cleaning and prep', duration: '3:20', status: 'completed' },
+    { id: 'step-2', width: '380px', leftOffset: '100px', color: 'bg-accent', label: 'tools staging', duration: '2:15', status: 'completed' },
+    { id: 'step-3', width: '420px', leftOffset: '50px', color: 'bg-accent', label: 'plates staging', duration: '2:45', status: 'completed' },
+    { id: 'step-4', width: '594px', leftOffset: '0px', color: 'bg-accent', label: 'equipment adjustment', duration: '2:15', status: 'completed' },
+    { id: 'step-5', width: '477px', leftOffset: '120px', color: 'bg-accent', label: 'manual adjustment', duration: '1:45', status: 'completed' },
+    { id: 'step-6', width: '5px', leftOffset: '300px', color: 'bg-accent', label: 'raw material inspection', duration: '1:20', status: 'completed' },
+    { id: 'step-7', width: '726px', leftOffset: '0px', color: 'bg-accent', label: 'quality inspection', duration: '2:30', status: 'in-progress' },
+    { id: 'step-8', width: '726px', leftOffset: '80px', color: 'bg-accent', label: 'documentation review', duration: '1:50', status: 'pending' },
+    { id: 'step-9', width: '477px', leftOffset: '50px', color: 'bg-accent', label: 'safety compliance', duration: '3:10', status: 'completed' },
+    { id: 'step-10', width: '600px', leftOffset: '100px', color: 'bg-accent', label: 'equipment calibration', duration: '2:45', status: 'pending' },
+    { id: 'step-11', width: '100%', leftOffset: '0px', color: 'bg-blue-500', label: 'evaluator 1', duration: '3:00', status: 'completed' },
+    { id: 'step-12', width: '100%', leftOffset: '0px', color: 'bg-orange-500', label: 'evaluator 2', duration: '2:30', status: 'completed' }
   ]
 
   const captureVideoScreenshot = (): string | undefined => {
@@ -107,12 +109,12 @@ export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
   return (
     <div className="flex h-full bg-neutral-50">
       {/* Reports Expanded Panel */}
-      <ReportsExpandedPanel onBack={handleBack} selectedRun={selectedRun} />
+      <RunPanel onBack={handleBack} selectedRun={selectedRun} />
 
       {/* Main Video Content */}
       <div className="flex-1 flex flex-col h-full">
         {/* Video Player */}
-        <div className="px-6 pt-6">
+        <div className="px-10 pt-4">
           <div className="bg-black rounded-lg aspect-video relative overflow-hidden" style={{ borderRadius: '8px' }}>
             {/* Video Player */}
             <video
@@ -153,7 +155,7 @@ export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
         </div>
 
         {/* Timebar Card */}
-        <div className="px-6 pt-4">
+        <div className="px-10 pt-4">
           <Card variant="default" className="p-0">
             <div className="bg-white relative rounded-lg size-full">
               <div className="box-border content-stretch flex flex-col gap-2 items-start justify-center overflow-clip px-0 py-4 relative size-full">
@@ -187,13 +189,12 @@ export default function VideoTab({ selectedRun = 'Run 1' }: VideoTabProps) {
                   </div>
                 </div>
               </div>
-              <div aria-hidden="true" className="absolute border border-solid border-zinc-200 inset-0 pointer-events-none rounded-lg" />
             </div>
           </Card>
         </div>
 
         {/* Timeline */}
-        <div className="px-6 pb-6 mt-6">
+        <div className="px-10 pb-10 mt-4">
           <Card variant="default" className="p-0">
             <div className="bg-white rounded-lg">
               <div className="p-2">

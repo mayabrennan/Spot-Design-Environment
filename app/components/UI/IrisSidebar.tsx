@@ -9,7 +9,8 @@ import {
   X,
   ArrowRightFromLine,
   ArrowLeftFromLine,
-  PanelRightClose
+  PanelRightClose,
+  ArrowUp
 } from 'lucide-react'
 
 interface IrisSidebarProps {
@@ -20,6 +21,7 @@ interface IrisSidebarProps {
 export default function IrisSidebar({ onClose, onExpand }: IrisSidebarProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
 
   const quickActions = [
     {
@@ -49,6 +51,10 @@ export default function IrisSidebar({ onClose, onExpand }: IrisSidebarProps) {
     setIsCollapsed(!isCollapsed)
   }
 
+  const handleButtonClick = () => {
+    setShowMessage(true)
+  }
+
   return (
     <div className={`bg-white border-l border-zinc-200 flex flex-col transition-all duration-300 ease-in-out flex-shrink-0 overflow-hidden ${
       isCollapsed ? 'w-16 h-[calc(100vh-80px)]' : 'w-[400px] h-[calc(100vh-80px)]'
@@ -75,21 +81,36 @@ export default function IrisSidebar({ onClose, onExpand }: IrisSidebarProps) {
               
               {/* Quick Actions */}
               <div className="flex flex-col gap-2 items-start justify-start w-full">
-                {quickActions.map((action, index) => (
-                  <button
-                    key={index}
-                    className="bg-accent-light hover:bg-accent flex flex-row h-10 items-center justify-start px-4 py-2 rounded-lg group transition-all duration-200 w-full"
-                  >
-                    <div className="flex flex-row gap-2.5 items-center justify-center pl-0 pr-2 py-0">
-                      <action.icon className={`w-4 h-4 ${action.color} group-hover:text-white transition-colors`} />
+                {showMessage ? (
+                  <div className="bg-accent-light flex flex-col items-center justify-center px-6 py-8 rounded-lg w-full text-center">
+                    <div className="text-accent text-sm font-medium leading-relaxed">
+                      Iris functionality hasn&apos;t been added to the design demo yet, but we&apos;re working on it!
                     </div>
-                    <div className="flex flex-row gap-2.5 items-center justify-center">
-                      <span className="text-sm font-medium text-accent group-hover:text-white transition-colors">
-                        {action.text}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                    <button
+                      onClick={() => setShowMessage(false)}
+                      className="mt-4 text-accent text-xs underline hover:no-underline transition-all duration-200"
+                    >
+                      Go back
+                    </button>
+                  </div>
+                ) : (
+                  quickActions.map((action, index) => (
+                    <button
+                      key={index}
+                      onClick={handleButtonClick}
+                      className="bg-accent-light hover:bg-accent flex flex-row h-10 items-center justify-start px-4 py-2 rounded-lg group transition-all duration-200 w-full"
+                    >
+                      <div className="flex flex-row gap-2.5 items-center justify-center pl-0 pr-2 py-0">
+                        <action.icon className={`w-4 h-4 ${action.color} group-hover:text-white transition-colors`} />
+                      </div>
+                      <div className="flex flex-row gap-2.5 items-center justify-center">
+                        <span className="text-sm font-medium text-accent group-hover:text-white transition-colors">
+                          {action.text}
+                        </span>
+                      </div>
+                    </button>
+                  ))
+                )}
               </div>
             </div>
 
@@ -101,11 +122,19 @@ export default function IrisSidebar({ onClose, onExpand }: IrisSidebarProps) {
                   placeholder="Ask iris about your agents..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleButtonClick()
+                    }
+                  }}
                   className="bg-transparent flex-1 text-sm text-accent-hover placeholder-accent-hover outline-none font-normal"
                 />
               </div>
-              <button className="bg-accent flex items-center justify-center p-1.5 rounded-md transition-all duration-200">
-                <ChevronRight className="w-4 h-4 text-white rotate-90" />
+              <button 
+                onClick={handleButtonClick}
+                className="bg-accent flex items-center justify-center p-1.5 rounded-md transition-all duration-200"
+              >
+                <ArrowUp className="w-4 h-4 text-white" />
               </button>
             </div>
           </>

@@ -184,11 +184,11 @@ export default function Analytics() {
   }
 
   return (
-    <div className="flex h-full bg-neutral-50">
+    <div className="h-full bg-neutral-50">
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-col h-full">
         {/* Page Header */}
-        <div className="bg-white border-b border-zinc-200 px-6 py-6">
+        <div className="bg-white border-b border-zinc-200 px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Breadcrumbs */}
             <div className="flex items-center gap-1.5">
@@ -281,7 +281,7 @@ export default function Analytics() {
         </div>
 
         {/* Analytics Dashboard */}
-        <div className="px-6 py-6">
+        <div className="px-4 py-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
             {/* Key Metric Card */}
             <div className="bg-white border border-zinc-200 rounded-lg">
@@ -472,7 +472,7 @@ export default function Analytics() {
                     </div>
                     
                     {/* Chart bars */}
-                    <div className="h-full flex items-end justify-between gap-2 ml-12 flex-1 border-b border-zinc-200 relative">
+                    <div className="h-full flex items-end justify-between gap-1 ml-12 flex-1 border-b border-zinc-200 relative" style={{ gap: 'clamp(0.25rem, 0.5rem, 0.75rem)' }}>
                       {/* Grid lines behind bars */}
                       <div className="absolute inset-0 flex flex-col justify-between">
                         <div className="border-t border-zinc-200"></div>
@@ -495,16 +495,18 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: '200px',
                                   backgroundColor: '#8181ff'
                                 }}
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[0]?.height || '200px',
                                   backgroundColor: '#4a5568'
                                 }}
@@ -521,16 +523,18 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: '180px',
                                   backgroundColor: '#8181ff'
                                 }}
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[1]?.height || '180px',
                                   backgroundColor: '#4a5568'
                                 }}
@@ -547,15 +551,16 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: '190px',
                                   backgroundColor: '#8181ff'
                                 }}
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[2]?.height || '190px',
                                   backgroundColor: '#4a5568'
@@ -573,15 +578,16 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
+                                  width: 'clamp(0.75rem, 1.5rem, 2rem)',
                                   height: '185px',
                                   backgroundColor: '#8181ff'
                                 }}
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[3]?.height || '185px',
                                   backgroundColor: '#4a5568'
@@ -599,7 +605,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '175px',
                                   backgroundColor: '#8181ff'
@@ -607,7 +613,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[4]?.height || '175px',
                                   backgroundColor: '#4a5568'
@@ -625,7 +631,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '148px',
                                   backgroundColor: '#8181ff'
@@ -633,7 +639,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[5]?.height || '148px',
                                   backgroundColor: '#4a5568'
@@ -651,7 +657,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '118px',
                                   backgroundColor: '#8181ff'
@@ -659,7 +665,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[6]?.height || '118px',
                                   backgroundColor: '#4a5568'
@@ -677,7 +683,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '75px',
                                   backgroundColor: '#8181ff'
@@ -685,7 +691,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[7]?.height || '75px',
                                   backgroundColor: '#4a5568'
@@ -703,7 +709,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '82px',
                                   backgroundColor: '#8181ff'
@@ -711,7 +717,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[8]?.height || '82px',
                                   backgroundColor: '#4a5568'
@@ -729,7 +735,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '130px',
                                   backgroundColor: '#8181ff'
@@ -737,7 +743,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[9]?.height || '130px',
                                   backgroundColor: '#4a5568'
@@ -755,7 +761,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '165px',
                                   backgroundColor: '#8181ff'
@@ -763,7 +769,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[10]?.height || '165px',
                                   backgroundColor: '#4a5568'
@@ -781,7 +787,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '108px',
                                   backgroundColor: '#8181ff'
@@ -789,7 +795,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[11]?.height || '108px',
                                   backgroundColor: '#4a5568'
@@ -807,7 +813,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '142px',
                                   backgroundColor: '#8181ff'
@@ -815,7 +821,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[12]?.height || '142px',
                                   backgroundColor: '#4a5568'
@@ -833,7 +839,7 @@ export default function Analytics() {
                             <div className="flex gap-1 items-end">
                               {/* Current bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: '98px',
                                   backgroundColor: '#8181ff'
@@ -841,7 +847,7 @@ export default function Analytics() {
                               />
                               {/* Comparison bar - half width */}
                               <div
-                                className="w-8 rounded-t transition-all duration-200 hover:opacity-80"
+                                className="rounded-t transition-all duration-200 hover:opacity-80"
                                 style={{ 
                                   height: comparisonData[selectedCompareTo as keyof typeof comparisonData]?.[13]?.height || '98px',
                                   backgroundColor: '#4a5568'
@@ -886,8 +892,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '200px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -901,8 +908,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '180px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -916,8 +924,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '186px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -931,8 +940,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '186px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -946,8 +956,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '174px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -961,8 +972,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '146px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -976,8 +988,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '114px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -991,8 +1004,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '74px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1006,8 +1020,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '80px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1021,8 +1036,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '127px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1036,8 +1052,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '160px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1051,8 +1068,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '107px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1066,8 +1084,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '140px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1081,8 +1100,9 @@ export default function Analytics() {
                             onMouseLeave={handleBarLeave}
                           >
                             <div
-                              className="w-16 rounded-t transition-all duration-200 hover:opacity-80"
+                              className="rounded-t transition-all duration-200 hover:opacity-80"
                               style={{ 
+                                width: 'clamp(1.5rem, 3rem, 4rem)',
                                 height: '93px',
                                 backgroundColor: '#8181ff'
                               }}
@@ -1274,9 +1294,9 @@ export default function Analytics() {
             </div>
           </div>
         </Card>
-          </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

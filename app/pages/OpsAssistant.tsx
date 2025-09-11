@@ -2,11 +2,10 @@
 'use client'
 
 import { useState, forwardRef, useImperativeHandle } from 'react'
-import { ChevronRight, Plus, LayoutGrid, Bot, LucideIcon } from 'lucide-react'
-import { Button } from '@spotai/design-system'
+import { ChevronRight, Plus, LayoutGrid, Bot, LucideIcon, User, Video } from 'lucide-react'
+import { Button, Tabs, TabItem } from '@spotai/design-system'
 import VideoTab from '../components/OpsAssistant/VideoTab'
 import RunsTab from '../components/OpsAssistant/RunsTab'
-import OutputTab from '../components/OpsAssistant/OutputTab'
 import ProfileTab from '../components/OpsAssistant/ProfileTab'
 import ReportingTab from '../components/OpsAssistant/ReportingTab'
 import OpsTeam from './OpsTeam'
@@ -70,7 +69,7 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
       {currentPage !== 'operations' && (
         <>
           {/* Header with breadcrumbs and main content */}
-          <div className="bg-white border-b border-zinc-200 px-6 py-6">
+          <div className="bg-white border-b border-zinc-200 px-4 py-4">
             {/* Breadcrumbs */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -114,12 +113,12 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {/* Edit Run Button */}
-                <div className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center">
+                {/* Edit Run Button - Hidden */}
+                {/* <div className="bg-white border border-zinc-200 rounded-lg px-4 py-2 flex items-center">
                   <span className="capitalize font-medium text-primary text-sm">
                     edit run
                   </span>
-                </div>
+                </div> */}
                 
                 {/* Add New Run Button */}
                 <div className="bg-accent rounded-lg px-4 py-2 flex items-center gap-2">
@@ -132,8 +131,8 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
             </div>
           </div>
 
-          {/* Runbar - Only show when video tab is active */}
-          {activeTab === 'video' && (
+          {/* Runbar - Hidden for now */}
+          {/* {activeTab === 'video' && (
             <Runbar
               selectedRun={selectedRun}
               isRunDropdownOpen={isRunDropdownOpen}
@@ -142,7 +141,21 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
               runOptions={runOptions}
               onClose={handleCloseRunbar}
             />
-          )}
+          )} */}
+
+          {/* Tabs Component - Full Width with Border */}
+          <div className="w-full">
+            <Tabs
+              items={[
+                { id: 'profile', label: 'Profile', icon: User },
+                { id: 'runs', label: 'All Runs', icon: LayoutGrid },
+                { id: 'video', label: 'Single Run', icon: Video }
+              ]}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              variant="default"
+            />
+          </div>
         </>
       )}
 
@@ -156,9 +169,7 @@ const OpsAssistant = forwardRef<{ handleNavigateToOperations: () => void }, OpsA
         ) : activeTab === 'runs' ? (
           <RunsTab onNavigateToVideo={handleNavigateToVideo} />
         ) : activeTab === 'video' ? (
-          <VideoTab />
-        ) : activeTab === 'output' ? (
-          <OutputTab />
+          <VideoTab selectedRun={selectedRun} />
         ) : activeTab === 'reporting' ? (
           <ReportingTab />
         ) : activeTab === 'profile' ? (

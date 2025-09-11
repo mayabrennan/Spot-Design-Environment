@@ -9,7 +9,7 @@ import {
   GripVertical, 
   MoreHorizontal
 } from 'lucide-react'
-import { Card, SearchInput, ToggleGroup } from '@spotai/design-system'
+import { Card, SearchInput } from '@spotai/design-system'
 import {
   DndContext,
   closestCenter,
@@ -69,7 +69,7 @@ function SortableTableRow({
     <tr 
       ref={setNodeRef} 
       style={style}
-      className={`border-b border-zinc-200 ${index % 2 === 0 ? 'bg-gray-50' : ''} ${isDragging ? 'z-10' : ''} ${isSelected ? 'border-2 border-accent bg-accent-light' : ''}`}
+      className={`border-b border-zinc-200 bg-white ${isDragging ? 'z-10' : ''} ${isSelected ? 'border-2 border-accent bg-accent-light' : ''}`}
       onClick={() => onSelect(row.id)}
     >
       <td className="p-4">
@@ -123,8 +123,8 @@ export default function OutputTab() {
   const [selectedRowId, setSelectedRowId] = useState<string | null>(null)
 
   const filterItems = [
-    { value: 'scorecard', label: 'scorecard' },
-    { value: 'people', label: 'people' }
+    { value: 'scorecard', label: 'Scorecard' },
+    { value: 'people', label: 'People' }
   ]
 
   const [tableData, setTableData] = useState<TableRow[]>([
@@ -132,7 +132,7 @@ export default function OutputTab() {
       id: '1',
       field: 'Phase 1',
       description: 'Initial phase of the operational process.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -140,7 +140,7 @@ export default function OutputTab() {
       id: '2',
       field: 'Equipment Adjustment',
       description: 'Adjusting equipment settings for optimal performance.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -148,7 +148,7 @@ export default function OutputTab() {
       id: '3',
       field: 'Manual Product Assembly',
       description: 'Assembling products by hand for precision.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -156,15 +156,15 @@ export default function OutputTab() {
       id: '4',
       field: 'Raw Material Inspection',
       description: 'Inspecting raw materials for quality assurance.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: false,
       timeline: true
     },
     {
       id: '5',
-      field: 'Manual Labelling',
+      field: 'Manual Labeling',
       description: 'Labeling items manually for accurate identification.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -172,7 +172,7 @@ export default function OutputTab() {
       id: '6',
       field: 'Phase 2',
       description: 'Second phase of the operational process.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -180,7 +180,7 @@ export default function OutputTab() {
       id: '7',
       field: 'Sorting and Arranging',
       description: 'Organizing and categorizing items systematically.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -188,7 +188,7 @@ export default function OutputTab() {
       id: '8',
       field: 'Cleaning Equipment',
       description: 'Equipment used for maintaining cleanliness and hygiene in various environments.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: false,
       timeline: true
     },
@@ -196,7 +196,7 @@ export default function OutputTab() {
       id: '9',
       field: 'Operator Break',
       description: 'Scheduled downtime for operators to rest and recharge.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     },
@@ -204,7 +204,7 @@ export default function OutputTab() {
       id: '10',
       field: 'Packaging and Shipping',
       description: 'The process of preparing products for delivery, including packing and labeling.',
-      value: 'out of 4',
+      value: 'Out of 4',
       scorecard: true,
       timeline: true
     }
@@ -240,12 +240,24 @@ export default function OutputTab() {
       <div className="flex-1 flex flex-col gap-4 p-4 overflow-auto">
         {/* Search and Filter Bar */}
         <div className="flex items-center gap-4 w-full">
-          {/* Filter Toggle Group */}
-          <ToggleGroup
-            items={filterItems}
-            value={activeFilter}
-            onValueChange={setActiveFilter}
-          />
+          {/* Filter Toggle Group - Hidden */}
+          {/* <div className="bg-white border border-zinc-200 rounded-md p-1.5 w-fit">
+            <div className="flex gap-1">
+              {filterItems.map((item) => (
+                <button
+                  key={item.value}
+                  onClick={() => setActiveFilter(item.value)}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
+                    activeFilter === item.value
+                      ? 'bg-accent-light text-accent'
+                      : 'text-primary-hover hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div> */}
 
           {/* Search and Filter */}
           <div className="flex items-center gap-6 flex-1">

@@ -168,7 +168,7 @@ export default function Run({ onTaskClick }: RunProps = {}) {
   return (
     <div className="flex flex-col h-full bg-neutral-50 w-full">
       {/* Run Header - spans full width */}
-      <div className="bg-white border-b border-zinc-200 px-6 py-6 flex flex-col gap-4">
+      <div className="bg-white border-b border-zinc-200 px-4 py-4 flex flex-col gap-4">
         <div className="flex gap-1 items-center">
           <div className="flex gap-1.5 items-center">
             <div className="text-sm font-medium text-primary-hover">Operations</div>

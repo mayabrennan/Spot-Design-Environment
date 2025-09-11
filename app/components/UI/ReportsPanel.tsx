@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Search, FileBarChart2, MoreHorizontal, Download, Eye } from 'lucide-react'
 import { Card, Badge } from '@spotai/design-system'
-import ReportExpandedPanel from './ReportExpandedPanel'
+import RunPanel from './RunPanel'
 
 interface ReportsPanelProps {
   onTaskClick?: () => void
@@ -43,7 +43,7 @@ export default function ReportsPanel({ onTaskClick }: ReportsPanelProps) {
 
   // Show expanded panel if a report is selected
   if (selectedReport) {
-    return <ReportExpandedPanel onBack={handleBackToReports} onTaskClick={onTaskClick} />
+    return <RunPanel onBack={handleBackToReports} onTaskClick={onTaskClick} />
   }
 
   return (

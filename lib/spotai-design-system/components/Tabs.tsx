@@ -36,12 +36,11 @@ const Tabs: React.FC<TabsProps> = ({
   const currentActiveTab = activeTab !== undefined ? activeTab : internalActiveTab
 
   const defaultVariant = {
-    container: 'bg-white',
-    tab: 'flex flex-row h-[52px] items-center justify-start p-0 relative shrink-0',
-    tabItem: 'flex flex-col h-[52px] items-center justify-center px-6 py-4 relative shrink-0',
-    tabWrapper: 'flex flex-col gap-2 h-[52px] items-center justify-center px-6 py-4 relative shrink-0',
-    tabButton: 'flex flex-row gap-2.5 items-center justify-center p-0 relative shrink-0',
-    active: 'border-b-2 border-accent',
+    container: 'bg-white w-full border-b border-zinc-200',
+    tab: 'flex flex-row items-end justify-start',
+    tabItem: 'flex flex-col gap-2 h-full items-center justify-center px-6 py-4 relative shrink-0',
+    tabWrapper: 'flex flex-col gap-2.5 h-full items-start justify-center pl-1 pr-0 py-0 relative shrink-0',
+    tabButton: 'flex gap-2.5 items-center justify-center relative shrink-0',
     inactive: 'opacity-50'
   }
 
@@ -73,40 +72,79 @@ const Tabs: React.FC<TabsProps> = ({
         {/* Tab Navigation */}
         <div className={defaultVariant.container}>
           <div className={defaultVariant.tab}>
-            {items.map((item) => (
-              <div 
-                key={item.id} 
-                className={cn(
-                  defaultVariant.tabItem,
-                  currentActiveTab === item.id ? defaultVariant.active : ''
-                )}
-              >
-                <button
-                  onClick={() => !item.disabled && handleTabChange(item.id)}
-                  disabled={item.disabled}
-                  className={cn(
-                    defaultVariant.tabButton,
-                    currentActiveTab === item.id ? 'opacity-100' : defaultVariant.inactive,
-                    item.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-                  )}
-                >
-                  <div className="overflow-clip relative shrink-0 size-4">
-                    {item.icon && (
-                      <item.icon 
+            {items.map((item, index) => (
+              <div key={item.id} className="flex flex-row items-end self-stretch">
+                {index > 0 && index < items.length - 1 ? (
+                  <div className={defaultVariant.tabWrapper}>
+                    <div 
+                      className={defaultVariant.tabItem}
+                    >
+                      {currentActiveTab === item.id && (
+                        <div className="absolute border-[#5857e8] border-[0px_0px_2px] border-solid inset-0 pointer-events-none" />
+                      )}
+                      <button
+                        onClick={() => !item.disabled && handleTabChange(item.id)}
+                        disabled={item.disabled}
                         className={cn(
-                          'w-4 h-4',
+                          defaultVariant.tabButton,
+                          currentActiveTab === item.id ? 'opacity-100' : defaultVariant.inactive,
+                          item.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                        )}
+                      >
+                        <div className="overflow-clip relative shrink-0 size-4">
+                          {item.icon && (
+                            <item.icon 
+                              className={cn(
+                                'w-4 h-4',
+                                currentActiveTab === item.id ? 'text-accent' : 'text-primary'
+                              )} 
+                            />
+                          )}
+                        </div>
+                        <div className={cn(
+                          'capitalize font-medium leading-[0] not-italic relative shrink-0 text-xs text-nowrap',
                           currentActiveTab === item.id ? 'text-accent' : 'text-primary'
-                        )} 
-                      />
-                    )}
+                        )}>
+                          <p className="leading-[16px] whitespace-pre">{item.label}</p>
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                  <div className={cn(
-                    'capitalize font-medium leading-[0] relative shrink-0 text-sm text-left text-nowrap',
-                    currentActiveTab === item.id ? 'text-accent' : 'text-primary'
-                  )}>
-                    <p className="block leading-[20px] whitespace-pre">{item.label}</p>
+                ) : (
+                  <div 
+                    className={defaultVariant.tabItem}
+                  >
+                     {currentActiveTab === item.id && (
+                       <div className="absolute border-[#5857e8] border-[0px_0px_2px] border-solid inset-0 pointer-events-none" />
+                     )}
+                    <button
+                      onClick={() => !item.disabled && handleTabChange(item.id)}
+                      disabled={item.disabled}
+                      className={cn(
+                        defaultVariant.tabButton,
+                        currentActiveTab === item.id ? 'opacity-100' : defaultVariant.inactive,
+                        item.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                      )}
+                    >
+                      <div className="overflow-clip relative shrink-0 size-4">
+                        {item.icon && (
+                          <item.icon 
+                            className={cn(
+                              'w-4 h-4',
+                              currentActiveTab === item.id ? 'text-accent' : 'text-primary'
+                            )} 
+                          />
+                        )}
+                      </div>
+                      <div className={cn(
+                        'capitalize font-medium leading-[0] not-italic relative shrink-0 text-xs text-nowrap',
+                        currentActiveTab === item.id ? 'text-accent' : 'text-primary'
+                      )}>
+                        <p className="leading-[16px] whitespace-pre">{item.label}</p>
+                      </div>
+                    </button>
                   </div>
-                </button>
+                )}
               </div>
             ))}
           </div>
